@@ -15,7 +15,6 @@ export default function Chatbot() {
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
 
-    // 💡 Dummy AI response logic (replace with real API later)
     setTimeout(() => {
       const botReply = {
         type: "bot",

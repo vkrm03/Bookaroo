@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { ToastContainer, toast, Slide, Bounce, Zoom, Flip } from 'react-toastify';
+import AOS from "aos";
+import "aos/dist/aos.css";
+import 'react-toastify/dist/ReactToastify.css';  
 import '../assets/Books.css';
 
 export default function Books({ addToCart }) {
@@ -7,6 +11,10 @@ export default function Books({ addToCart }) {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showSearchResult, setShowSearchResult] = useState(false);
+
+  useEffect(() => {
+          AOS.init({ duration: 800, once: true });
+      }, []);
 
   const categoryMap = {
     All: 'fiction',
@@ -21,40 +29,53 @@ export default function Books({ addToCart }) {
   };
 
   const fetchBooks = async () => {
-    setLoading(true);
-    setBooks([]);
-    try {
-      let url = '';
-      if (showSearchResult && searchQuery.trim() !== '') {
-        url = `https://openlibrary.org/search.json?q=${encodeURIComponent(searchQuery)}&limit=50`;
-        const res = await fetch(url);
-        const data = await res.json();
+  setLoading(true);
+  setBooks([]);
+  try {
+    let url = '';
+    const STANDARD_PRICES = [150, 200, 350, 400, 500];
+    const getPriceForBook = (title) => {
+  let hash = 0;
+  for (let i = 0; i < title.length; i++) {
+    hash = title.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const index = Math.abs(hash) % STANDARD_PRICES.length;
+  return STANDARD_PRICES[index];
+};
 
-        const booksData = data.docs.map((book) => ({
-          title: book.title,
-          author: book.author_name ? book.author_name.join(', ') : 'Unknown Author',
-          cover_id: book.cover_i,
-        }));
-        setBooks(booksData);
-      } else {
-        const subject = categoryMap[selectedCategory] || 'fiction';
-        url = `https://openlibrary.org/subjects/${subject}.json?limit=40`;
-        const res = await fetch(url);
-        const data = await res.json();
+    if (showSearchResult && searchQuery.trim() !== '') {
+      url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(searchQuery)}&maxResults=40`;
+      const res = await fetch(url);
+      const data = await res.json();
 
-        const booksData = data.works.map((book) => ({
-          title: book.title,
-          author: book.authors?.[0]?.name || 'Unknown Author',
-          cover_id: book.cover_id,
-        }));
-        setBooks(booksData);
-      }
-    } catch (error) {
-      console.error('Failed to fetch books:', error);
-    } finally {
-      setLoading(false);
+      const booksData = data.items?.map((book) => ({
+        title: book.volumeInfo.title,
+        author: book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'Unknown Author',
+        cover_id: book.volumeInfo.imageLinks?.thumbnail || null,
+        price: getPriceForBook(book.volumeInfo.title),
+      })) || [];
+      setBooks(booksData);
+    } else {
+      const subject = categoryMap[selectedCategory] || 'fiction';
+      url = `https://www.googleapis.com/books/v1/volumes?q=subject:${encodeURIComponent(subject)}&maxResults=40`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      const booksData = data.items?.map((book) => ({
+        title: book.volumeInfo.title,
+        author: book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'Unknown Author',
+        cover_id: book.volumeInfo.imageLinks?.thumbnail || null,
+        price: getPriceForBook(book.volumeInfo.title),
+      })) || [];
+      setBooks(booksData);
     }
-  };
+  } catch (error) {
+    console.error('Failed to fetch books:', error);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   useEffect(() => {
     fetchBooks();
@@ -78,7 +99,7 @@ export default function Books({ addToCart }) {
 
      <form
   onSubmit={(e) => {
-    e.preventDefault(); // prevents page reload
+    e.preventDefault();
     handleSearch();
   }}
   className="search-bar"
@@ -95,7 +116,7 @@ export default function Books({ addToCart }) {
 </form>
 
 
-      <div className="category-tabs">
+      <div className="category-tabs" data-aos="zoom-out">
         {Object.keys(categoryMap).map((cat) => (
           <button
             key={cat}
@@ -121,26 +142,34 @@ export default function Books({ addToCart }) {
         Showing search results for: <strong>{searchQuery}</strong>
       </p>
     )}
-    <div className="book-list">
+    <div className="book-list" data-aos="fade-up">
       {books.map((book, index) => (
         <div className="book-card" key={index}>
   <img
-    src={
-      book.cover_id
-        ? `https://covers.openlibrary.org/b/id/${book.cover_id}-L.jpg`
-        : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTMI5yf9vYw85Q9Qr4kI3HH-qHdza7Gzp5HQ&s'
-    }
+    src={ book.cover_id ? book.cover_id : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTMI5yf9vYw85Q9Qr4kI3HH-qHdza7Gzp5HQ&s'}
     alt={book.title}
   />
   <p><strong>{book.title}</strong></p>
   <p>by {book.author}</p>
-
+  <p className="price">₹{book.price}</p>
   <button
-    className="add-btn"
-    onClick={() => addToCart(book)}
-  >
-    🛒 Add to Bag
-  </button>
+  className="add-btn"
+  onClick={() => {
+    addToCart(book);
+    toast.success(`Book Added to your bag !`, {
+      position: 'top-center',
+      autoClose: 800,
+      hideProgressBar: true,
+      transition: Slide,
+      pauseOnHover: false,
+      draggable: false,
+    });
+  }}
+>
+  Add to Bag
+</button>
+
+
 </div>
 
       ))}
@@ -151,7 +180,7 @@ export default function Books({ addToCart }) {
 )}
 
 
-
+<ToastContainer />
     </div>
   );
 }

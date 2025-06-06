@@ -58,7 +58,6 @@
   box-shadow: 0 8px 20px rgba(64, 76, 112, 0.3);
 }
 
-/* Features Section */
 .features {
   margin-top: 60px;
   text-align: center;
@@ -95,7 +94,6 @@
   margin-bottom: 10px;
 }
 
-/* Trending Books */
 .trending {
   margin-top: 80px;
   text-align: center;
@@ -198,7 +196,6 @@
   letter-spacing: 0.5px;
 }
 
-/* 📱 Responsive Styles Below */
 @media (max-width: 1024px) {
   .text-content h1 {
     font-size: 2.8rem;

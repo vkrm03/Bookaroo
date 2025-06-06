@@ -102,8 +102,8 @@ export default function Home() {
         </section>
 
         <footer className="footer" data-aos="fade-up">
-  <p>© {new Date().getFullYear()} Bookaroo — All rights reserved.</p>
-</footer>
+          <p>© {new Date().getFullYear()} Bookaroo — All rights reserved.</p>
+        </footer>
 
         
       </main>

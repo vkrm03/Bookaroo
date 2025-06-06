@@ -159,15 +159,16 @@
 .book-card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* this spreads content */
+  justify-content: space-between;
   padding: 15px;
-  height: 100%; /* ensure full height if you use grid */
+  height: 100%;
 }
 
 .book-card img {
   height: 250px;
   object-fit: cover;
   margin-bottom: 10px;
+  image-rendering: crisp-edges;
 }
 
 .book-card button {
