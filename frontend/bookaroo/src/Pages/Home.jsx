@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import '../assets/Home.css';
+import '../assets/home.css';
 import AOS from "aos";
 import "aos/dist/aos.css";
 
