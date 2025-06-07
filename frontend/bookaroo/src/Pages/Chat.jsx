@@ -15,7 +15,7 @@ export default function Chatbot() {
   const userMsg = { type: "user", text: input };
   setMessages((prev) => [...prev, userMsg]);
   setInput("");
-  setIsThinking(true); // start thinking...
+  setIsThinking(true);
 
   try {
     const res = await fetch("http://localhost:5000/ask", {

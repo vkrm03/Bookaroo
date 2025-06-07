@@ -1,4 +1,3 @@
-// src/Pages/Cart.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../assets/bag.css';
@@ -46,65 +45,67 @@ export default function Cart({ cart, setCart }) {
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
+  
   const handleCheckout = async () => {
-    if (!phone || !email) {
-      toast.error('Please enter the details.', {
-        position: 'top-center',
-        autoClose: 1500,
-        hideProgressBar: true,
-        transition: Slide,
-        pauseOnHover: false,
-        draggable: false,
-      });
-      return;
-    }
-    if (cart.length === 0) {
-      toast.error('Your bag is empty!', {
-        position: 'top-center',
-        autoClose: 1500,
-        hideProgressBar: true,
-        transition: Slide,
-        pauseOnHover: false,
-        draggable: false,
-      });
-      return;
-    }
+  if (!phone || !email) {
+    toast.error('Please enter the details.', {
+      position: 'top-center',
+      autoClose: 1500,
+      hideProgressBar: true,
+      transition: Slide,
+      pauseOnHover: false,
+      draggable: false,
+    });
+    return;
+  }
 
-    const orderData = {
-      phone,
-      email,
-      items: cart.map(item => ({
-        title: item.title,
-        quantity: item.quantity,
-        price: item.price,
-        total: item.price * item.quantity,
-      })),
-      totalAmount: totalPrice,
-    };
+  if (cart.length === 0) {
+    toast.error('Your bag is empty!', {
+      position: 'top-center',
+      autoClose: 1500,
+      hideProgressBar: true,
+      transition: Slide,
+      pauseOnHover: false,
+      draggable: false,
+    });
+    return;
+  }
 
-    try {
-      await axios.post('http://localhost:5000/checkout', orderData);
-      toast.success('Order sent successfully.', {
-        position: 'top-center',
-        autoClose: 1500,
-        hideProgressBar: true,
-        transition: Slide,
-        pauseOnHover: false,
-        draggable: false,
-      });
-      clearCart();
-    } catch (error) {
-      console.error(error);
-      toast.error('Failed to send order.', {
-        position: 'top-center',
-        autoClose: 1500,
-        hideProgressBar: true,
-        transition: Slide,
-        pauseOnHover: false,
-        draggable: false,
-      });
-    }
+  const orderData = {
+    phone,
+    email,
+    items: cart.map(item => ({
+      title: item.title,
+      quantity: item.quantity,
+      price: item.price,
+      total: item.price * item.quantity,
+    })),
+    totalAmount: totalPrice,
   };
+
+  toast.promise(
+    axios.post('http://localhost:5000/checkout', orderData),
+    {
+      pending: 'Placing your order...',
+      success: 'Order placed successfully! Check your email.',
+      error: 'Failed to place order',
+    },
+    {
+      position: 'top-center',
+      autoClose: 1500,
+      hideProgressBar: true,  
+      transition: Slide,
+      pauseOnHover: false,
+      draggable: false,
+    }
+  ).then(() => {
+    clearCart();
+  }).catch((error) => {
+    console.error(error);
+  });
+};
+
+
 
   return (
     <div className="cart-container">
