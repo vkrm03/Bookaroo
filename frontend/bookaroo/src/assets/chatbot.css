@@ -1,5 +1,5 @@
 .chatbot-container {
-  max-width: 600px;
+  max-width: 800px;
   margin: 40px auto;
   padding: 20px;
   border-radius: 15px;
@@ -71,4 +71,35 @@
 
 .chat-input-area button:hover {
   background-color: #303a56;
+}
+
+
+.message.thinking {
+  color: #333;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.message.bot.thinking .dot {
+  animation: blink 1.2s infinite;
+  font-weight: bold;
+}
+
+.message.bot.thinking .dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.message.bot.thinking .dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0.1;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.1;
+  }
 }
