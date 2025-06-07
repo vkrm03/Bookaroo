@@ -3,7 +3,7 @@ import { ToastContainer, toast, Slide } from 'react-toastify';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import 'react-toastify/dist/ReactToastify.css';  
-import '../assets/Books.css';
+import '../assets/books.css';
 
 export default function Books({ addToCart }) {
   const [searchQuery, setSearchQuery] = useState('');
