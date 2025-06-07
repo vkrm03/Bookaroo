@@ -9,7 +9,7 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
-client = OpenAI(api_key=os.getenv("api_key"))
+client = OpenAI(api_key="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")
 
 @app.route("/ask", methods=["POST"])
 def ask():
