@@ -6,6 +6,7 @@ import Home from "./Pages/Home";
 import Chatbot from "./Pages/Chat";
 import Books from "./Pages/Books";
 import About from "./Pages/About";
+import Admin from "./Pages/Admin";
 import Cart from "./Pages/Bag";
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
             path="/cart"
             element={<Cart cart={cart} setCart={setCart} />}
           />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
       </Router>
     </div>
