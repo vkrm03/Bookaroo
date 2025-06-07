@@ -2,7 +2,7 @@
 
 Welcome to **Bookaroo**, an interactive chatbot-powered e-commerce web app made for book lovers! Whether you're hunting for mystery novels or rom-coms, BookarooBot's got your back with AI-driven recommendations, a shopping cart, and a smooth checkout system.
 
-> 🎯 Submission for Uplyft.ai Case Study Round 1  
+> 🎯 Submission for Uplyft.ai 
 > 🚀 Tech Stack: React + Flask + Express + MongoDB + OpenAI GPT
 
 ---
@@ -74,12 +74,12 @@ pip install -r requirements.txt
 python main.py
 
 
-🧪 Mock Data
+Mock Data
 The app contains ~100 mock books across categories (Romance, Mystery, Sci-Fi, Thriller)
 
 MongoDB stores all orders with user name, phone, email, cart details, and total
 
-🧠 Sample Chat Flow
+Sample Chat Flow
 User: Recommend me some sci-fi books
 Bot: Sure! Here are a few popular ones:
 
@@ -91,7 +91,7 @@ Neuromancer by William Gibson
 
 The bot uses GPT-4o-mini for responses and adapts to your queries like a smart assistant.
 
-🧾 Order Flow
+Order Flow
 User adds books to cart
 
 Fills out name, email, phone
@@ -100,12 +100,12 @@ Clicks “Place Order”
 
 Order is saved to MongoDB and an HTML email is sent to the user with the order summary
 
-🔐 Admin Access
+Admin Access
 Visit /admin on the frontend to view all orders
 
 Orders are fetched using a GET request from the backend MongoDB
 
-🧠 Challenges Faced
+Challenges Faced
 Challenge	Solution
 CORS issues across Flask/Express	Used CORS middleware in both backend servers
 Email delivery failures	Configured Gmail SMTP + tested with app password
