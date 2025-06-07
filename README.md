@@ -100,8 +100,8 @@ Clicks “Place Order”
 
 Order is saved to MongoDB and an HTML email is sent to the user with the order summary
 
-Admin Access
-Visit /admin on the frontend to view all orders
+*Admin Access*
+Visit /admin on the frontend to view all orders. There is no button or clickable to go /admin , we need to type manually for the admin page for some reasons.
 
 Orders are fetched using a GET request from the backend MongoDB
 
