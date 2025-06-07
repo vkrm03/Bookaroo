@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../assets/bag.css';
+import api_url from '../../public/Uri';
 import { toast, ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -84,7 +85,7 @@ export default function Cart({ cart, setCart }) {
   };
 
   toast.promise(
-    axios.post('http://localhost:5000/checkout', orderData),
+    axios.post(`${api_url}/checkout`, orderData),
     {
       pending: 'Placing your order...',
       success: 'Order placed successfully! Check your email.',

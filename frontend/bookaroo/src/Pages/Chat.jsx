@@ -35,7 +35,7 @@ export default function Chatbot() {
     ]);
   }
 
-  setIsThinking(false); // done thinking
+  setIsThinking(false);
 };
 
 

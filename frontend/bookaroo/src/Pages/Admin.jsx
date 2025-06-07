@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "../assets/admin.css"; // Custom styles here
+import "../assets/admin.css";
+import api_url from '../../public/Uri';
 
 export default function Admin() {
   const [orders, setOrders] = useState([]);
@@ -8,7 +9,7 @@ export default function Admin() {
 
 
   useEffect(() => {
-    fetch("http://localhost:5000/orders")
+    fetch(`${api_url}/orders`)
       .then((res) => res.json())
       .then((data) => {
         setOrders(data.orders || []);
