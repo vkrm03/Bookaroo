@@ -89,7 +89,7 @@ Ender's Game by Orson Scott Card
 
 Neuromancer by William Gibson
 
-The bot uses GPT-4o-mini for responses and adapts to your queries like a smart assistant.
+The bot uses GPT-3 for responses and adapts to your queries like a smart assistant.
 
 Order Flow
 User adds books to cart
